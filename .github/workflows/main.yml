@@ -18,7 +18,10 @@ jobs:
         if: matrix.environment == 'dev'
         uses: actions/checkout@v2
         with:
-          path: dev
+          script: |
+            echo changing directory newly..............
+            ls
+            cd /environment/dev
 
       - name: Checkout code for staging
         if: matrix.environment == 'staging'
