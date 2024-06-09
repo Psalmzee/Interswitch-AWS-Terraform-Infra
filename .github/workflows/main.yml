@@ -18,39 +18,39 @@ jobs:
         if: matrix.environment == 'dev'
         uses: actions/checkout@v2
         with:
-          path: environment/dev
+          path: environments/dev
     
 
       - name: Checkout code for staging
         if: matrix.environment == 'staging'
         uses: actions/checkout@v2
         with:
-          path: staging
+          path: environments/staging
 
       - name: Checkout code for production
         if: matrix.environment == 'production'
         uses: actions/checkout@v2
         with:
-          path: production
+          path: environments/production
       
 
       - name: List files and change directory for dev
         if: matrix.environment == 'dev'
         run: |
-            ls environment/dev/environment
+            ls environment/dev/environments
             echo This is dev env....
   
       - name: List files and change directory for staging
         if: matrix.environment == 'staging'
         run: |
-            ls environment/staging
-            cd environment/staging
+            ls environments/staging
+            cd environments/staging
   
       - name: List files and change directory for production
         if: matrix.environment == 'production'
         run: |
-            ls environment/production
-            cd environment/production
+            ls environments/production
+            cd environments/production
 
 
       - name: Setup Terraform
