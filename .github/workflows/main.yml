@@ -18,19 +18,19 @@ jobs:
         if: matrix.environment == 'dev'
         uses: actions/checkout@v2
         with:
-          path: environments/dev
+          path: dev
 
       - name: Checkout code for staging
         if: matrix.environment == 'staging'
         uses: actions/checkout@v2
         with:
-          path: environments/staging
+          path: staging
 
       - name: Checkout code for production
         if: matrix.environment == 'production'
         uses: actions/checkout@v2
         with:
-          path: environments/production
+          path: production
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
