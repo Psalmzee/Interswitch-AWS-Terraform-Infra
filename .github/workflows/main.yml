@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout code for dev
         if: matrix.environment == 'dev'
-        uses: actions/checkout@v2
+        uses: appleboy/ssh-action@v0.1.10
         with:
           script: |
             echo changing directory newly..............
