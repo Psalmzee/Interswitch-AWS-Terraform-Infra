@@ -1,5 +1,5 @@
 resource "aws_security_group" "interswitch-sg" {
-  vpc_id = "aws_security_group"
+  vpc_id = var.vpc_id
 
   # Allow HTTP traffic from anywhere
   ingress {

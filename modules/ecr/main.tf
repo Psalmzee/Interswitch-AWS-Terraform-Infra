@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "interswitch-ecr" {
 
     principals {
       type        = "AWS"
-      identifiers = ["123456789012"]
+      identifiers = ["637423239767"]
     }
 
     actions = [
@@ -33,6 +33,6 @@ data "aws_iam_policy_document" "interswitch-ecr" {
 
 
 resource "aws_ecr_repository_policy" "interswitch-ecr" {
-  repository = aws_ecr_repository.interswitch-ecr
+  repository = aws_ecr_repository.interswitch-ecr.name
   policy = data.aws_iam_policy_document.interswitch-ecr.json
 }

@@ -9,27 +9,50 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        environment: [dev, staging, production]
+
     steps:
-      - name: Checkout code
+      - name: Checkout code for dev
+        if: matrix.environment == 'dev'
         uses: actions/checkout@v2
+        with:
+          path: environments/dev
+
+      - name: Checkout code for staging
+        if: matrix.environment == 'staging'
+        uses: actions/checkout@v2
+        with:
+          path: environments/staging
+
+      - name: Checkout code for production
+        if: matrix.environment == 'production'
+        uses: actions/checkout@v2
+        with:
+          path: environments/production
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.3.0  # Specify your Terraform version
+          terraform_version: 1.3.0
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ${{ matrix.environment }}
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: ${{ matrix.environment }}
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ${{ matrix.environment }}
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets[matrix.environment].AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[matrix.environment].AWS_SECRET_ACCESS_KEY }}
+        working-directory: ${{ matrix.environment }}
