@@ -37,8 +37,8 @@ jobs:
       - name: List files and change directory for dev
         if: matrix.environment == 'dev'
         run: |
-            ls environment/dev
-            cd environment/dev
+            ls 
+            echo This is dev env....
   
       - name: List files and change directory for staging
         if: matrix.environment == 'staging'
