@@ -16,12 +16,10 @@ jobs:
     steps:
       - name: Checkout code for dev
         if: matrix.environment == 'dev'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
-          run: |
-            echo changing directory newly..............
-            ls
-            cd /environment/dev
+          path: environment/dev
+    
 
       - name: Checkout code for staging
         if: matrix.environment == 'staging'
@@ -34,6 +32,26 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: production
+      
+
+      - name: List files and change directory for dev
+        if: matrix.environment == 'dev'
+        run: |
+            ls environment/dev
+            cd environment/dev
+  
+      - name: List files and change directory for staging
+        if: matrix.environment == 'staging'
+        run: |
+            ls environment/staging
+            cd environment/staging
+  
+      - name: List files and change directory for production
+        if: matrix.environment == 'production'
+        run: |
+            ls environment/production
+            cd environment/production
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
