@@ -38,7 +38,6 @@ jobs:
         if: matrix.environment == 'dev'
         run: |
             ls environments/dev/environments/dev
-            cd environments/dev/environments/dev
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -46,6 +45,7 @@ jobs:
           terraform_version: 1.3.0
       - name: Initialize and Apply Terraform
         run: |
+          cd environments/dev/environments/dev
           terraform init
           terraform validate
           terraform plan
