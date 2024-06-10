@@ -39,7 +39,18 @@ jobs:
         run: |
             ls environments/dev/environments/dev
             cd environments/dev/environments/dev
-            
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
+      - name: Initialize and Apply Terraform
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply
+
   
       - name: List files and change directory for staging
         if: matrix.environment == 'staging'
@@ -54,26 +65,26 @@ jobs:
             cd environments/production
 
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.3.0
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v2
+      #   with:
+      #     terraform_version: 1.3.0
 
-      - name: Terraform Init
-        run: terraform init
-        working-directory: ${{ matrix.environment }}
+      # - name: Terraform Init
+      #   run: terraform init
+      #   working-directory: ${{ matrix.environment }}
 
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: ${{ matrix.environment }}
+      # - name: Terraform Validate
+      #   run: terraform validate
+      #   working-directory: ${{ matrix.environment }}
 
-      - name: Terraform Plan
-        run: terraform plan
-        working-directory: ${{ matrix.environment }}
+      # - name: Terraform Plan
+      #   run: terraform plan
+      #   working-directory: ${{ matrix.environment }}
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main'
+      #   run: terraform apply -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[matrix.environment].AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[matrix.environment].AWS_SECRET_ACCESS_KEY }}
