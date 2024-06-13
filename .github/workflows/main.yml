@@ -64,7 +64,10 @@ jobs:
             ls environments/production
             cd environments/production
 
-
+          env:
+          AWS_ACCESS_KEY_ID: ${{ secrets[matrix.environment].AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[matrix.environment].AWS_SECRET_ACCESS_KEY }}
+        working-directory: ${{ matrix.environment }}
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v2
       #   with:
@@ -85,7 +88,4 @@ jobs:
       # - name: Terraform Apply
       #   if: github.ref == 'refs/heads/main'
       #   run: terraform apply -auto-approve
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets[matrix.environment].AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets[matrix.environment].AWS_SECRET_ACCESS_KEY }}
-        working-directory: ${{ matrix.environment }}
+
